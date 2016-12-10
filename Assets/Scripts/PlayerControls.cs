@@ -3,45 +3,49 @@ using System.Collections;
 
 public class PlayerControls : MonoBehaviour {
 
+	public static PlayerControls Instance;
+
     private Rigidbody2D rb;
+	private float moveForce = 200f;
+	private bool isTransition;
 
     void Awake() {
+		Instance = this;
         rb = GetComponent<Rigidbody2D>();
     }
+	void OnDestroy() {
+		Instance = null;
+	}
+	public void OnRoomTransitionStarted() {
+		rb.velocity = Vector3.zero;
+	}
+	public void OnRoomTranisiontCompleted() {
+	}
 
-    void Update() {
+	void Update() {
+		if (Game.isRoomTransition) {
+			return;
+		}
 
-        bool moveLeft = Input.GetKey(KeyCode.LeftArrow);
-        bool moveRight = Input.GetKey(KeyCode.RightArrow);
-        bool move = moveLeft || moveRight;
-        bool jump = Input.GetKey(KeyCode.UpArrow);
-        bool atk1 = Input.GetKey(KeyCode.Z);
-        bool atk2 = Input.GetKey(KeyCode.X);
+		bool moveLeft = Input.GetKey(KeyCode.LeftArrow);
+		bool moveRight = Input.GetKey(KeyCode.RightArrow);
+		bool moveUp = Input.GetKey(KeyCode.UpArrow);
+		bool moveDown = Input.GetKey(KeyCode.DownArrow);
+		bool move = moveLeft || moveRight || moveUp || moveDown;
 
-        if(moveLeft) {
-            rb.AddForce(new Vector2(-100, 0), ForceMode2D.Force);
-        }
-        if(moveRight) {
-            rb.AddForce(new Vector2(100, 0), ForceMode2D.Force);
-        }
+		if(moveLeft) {
+			rb.AddForce(new Vector2(-moveForce, 0), ForceMode2D.Force);
+		}
+		if(moveRight) {
+			rb.AddForce(new Vector2(moveForce, 0), ForceMode2D.Force);
+		}
+		if (moveUp) {
+			rb.AddForce(new Vector2(0, moveForce));
+		}
+		if (moveDown) {
+			rb.AddForce(new Vector2(0, -moveForce));
+		}
 
-        rb.drag = move ? 1 : 5;
-
-
-        if(jump) {
-            rb.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
-        }
-
-        if(atk1) {
-
-        }
-        if(atk2) {
-
-        }
-    }
-
-
-    private void OnCollisionEnter2D(Collision2D coll) {
-        Debug.Log("ON THE GROUND");
-    }
+		rb.drag = move ? 5 : 15;
+	}
 }
