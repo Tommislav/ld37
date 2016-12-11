@@ -1,5 +1,5 @@
 X Room wrapping
-o Animate player
+X Animate player
 o Player attack enemies
 o onemies attack player
 

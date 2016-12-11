@@ -4,14 +4,20 @@ using System.Collections;
 public class ChangeRoomTrigger : MonoBehaviour {
 
 
-	public ChangeRooms.Dir direction;
-	
-	private void OnTriggerEnter2D(Collider2D coll) {
-		if (Game.isRoomTransition) {
-			return;
-		}
+    public ChangeRooms.Dir direction;
 
-		// if player
-		ChangeRooms.Instance.ChangeRoom(direction);
-	}
+    private void OnTriggerEnter2D(Collider2D coll) {
+
+        if (!coll.gameObject.CompareTag("Player")) {
+            return;
+        }
+
+
+        if(Game.isRoomTransition) {
+            return;
+        }
+
+        // if player
+        ChangeRooms.Instance.ChangeRoom(direction);
+    }
 }
