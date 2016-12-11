@@ -10,6 +10,7 @@ public class ChangeRoomTrigger : MonoBehaviour {
 		if (Game.isRoomTransition) {
 			return;
 		}
+
 		// if player
 		ChangeRooms.Instance.ChangeRoom(direction);
 	}
