@@ -13,6 +13,7 @@ public class Game : MonoBehaviour {
     private int numberOfActiveMonsters;
     private GameObject lockDoors;
     private bool doorsAreLocked;
+	private int health = 5;
 
     void Awake() {
         Instace = this;
@@ -75,6 +76,23 @@ public class Game : MonoBehaviour {
             SetLockExits(false);
         }
     }
+
+	public void OnPlayerDamage() {
+		health--;
+		Debug.Log("OnPlayerDamage: " + health);
+		Hud.Instance.SetHealth(health);
+		if (health <= 0) {
+			Debug.Log("Game Over");
+		}
+	}
+
+	public void OnHealthPickup() {
+		health++;
+		if (health > 5) {
+			health = 5;
+		}
+		Hud.Instance.SetHealth(health);
+	}
 
     public void OnTriggerInvoked() {
         Find.ChildByName(this, "/World/InteriorCombos/One").SetActive(true);

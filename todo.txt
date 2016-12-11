@@ -5,12 +5,17 @@ X enemies attack player
 
 X Spawning enemies
 X Text sign
-o Step-triggers
+X Step-triggers
+X lock the doors
+
+X Health
+o Intro
+
 o Keep track of position "SS" "NS" "SW" and so on
 o Kill an enemy can spawn an item
-o Health
 
-o lock the doors
+
+
 
 o First room intro
 o Rearrange interiors

@@ -167,6 +167,7 @@ public class PlayerControls : MonoBehaviour {
             freezeTime = Time.time + 1f;
             isBlinking = true;
 
+			Game.Instace.OnPlayerDamage();
         }
     }
 }
