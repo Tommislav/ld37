@@ -10,19 +10,26 @@ public class Game : MonoBehaviour {
 
     public ParticleSystem hitMonsterParticles;
 
+    private int numberOfActiveMonsters;
+    private GameObject lockDoors;
+    private bool doorsAreLocked;
+
     void Awake() {
         Instace = this;
+        lockDoors = Find.ChildByName(this, "/World/Doors");
+        SetLockExits(false);
     }
     private void OnDestroy() {
         Instace = null;
     }
 
-    void Update() {
-
-    }
 
     public void OnEnterNewRoom(string room) {
         LeanTween.delayedCall(gameObject, 1f, SpawnMonster);
+
+        if (numberOfActiveMonsters >= 3) {
+            SetLockExits(true);
+        }
     }
 
     private void SpawnMonster() {
@@ -31,14 +38,16 @@ public class Game : MonoBehaviour {
         float minY = -4f;
         float maxY = 4f;
         Vector3 monsterPos = new Vector3(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY), -0.7f);
-        Vector3 smokePos = monsterPos - new Vector3(0, 0, 0.1f);
+        Vector3 smokePos = new Vector3(0, 0, -0.1f);
 
         GameObject monster = Instantiate(PrefabRegistry.Instance.enemyBouncer) as GameObject;
         monster.transform.position = monsterPos;
-        GameObject smoke = Instantiate(PrefabRegistry.Instance.smokeSpawner) as GameObject;
-        smoke.transform.position = smokePos;
 
-        Find.ComponentOnGameObject<SmokeSpawner>(this, smoke).StartSmoke(0.5f, 10, 20, ()=> Find.ComponentOnGameObject<Enemy>(monster).EnemySpawned());
+        GameObject smoke = Instantiate(PrefabRegistry.Instance.smokeSpawner) as GameObject;
+        smoke.transform.parent = monster.transform;
+        smoke.transform.localPosition = smokePos;
+
+        Find.ComponentOnGameObject<SmokeSpawner>(this, smoke).StartSmoke(0.6f, 3, 6, 10, ()=> Find.ComponentOnGameObject<Enemy>(monster).EnemySpawned());
     }
 
     public void OnLeaveRoom() {
@@ -49,5 +58,30 @@ public class Game : MonoBehaviour {
         Vector3 p = new Vector3(position.x, position.y, hitMonsterParticles.transform.position.z);
         hitMonsterParticles.transform.position = p;
         hitMonsterParticles.Play();
+    }
+
+    public string GetTextForSign() {
+        return "Welcome to the dungeon!";
+    }
+
+    public void OnNewMonster() {
+        numberOfActiveMonsters++;
+    }
+
+    public void OnMonsterKilled() {
+        numberOfActiveMonsters--;
+
+        if (doorsAreLocked && numberOfActiveMonsters == 0) {
+            SetLockExits(false);
+        }
+    }
+
+    public void OnTriggerInvoked() {
+        Find.ChildByName(this, "/World/InteriorCombos/One").SetActive(true);
+    }
+
+    public void SetLockExits(bool f) {
+        doorsAreLocked = f;
+        lockDoors.SetActive(f);
     }
 }

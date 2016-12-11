@@ -1,12 +1,17 @@
 X Room wrapping
 X Animate player
 X Player attack enemies
-o enemies attack player
+X enemies attack player
 
-o Spawning enemies
-o Text sign
-o Keep track of position "SS" "NS" "SW" and so on
+X Spawning enemies
+X Text sign
 o Step-triggers
+o Keep track of position "SS" "NS" "SW" and so on
+o Kill an enemy can spawn an item
+o Health
+
+o lock the doors
+
 o First room intro
 o Rearrange interiors
 o Chests

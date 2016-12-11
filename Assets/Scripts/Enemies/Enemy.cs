@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour {
 
     public void EnemySpawned() {
         isStarted = true;
+        Game.Instace.OnNewMonster();
         SendMessage("EnemyStart", SendMessageOptions.DontRequireReceiver);
     }
 
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour {
 
             HP--;
             if (HP <= 0) {
+                Game.Instace.OnMonsterKilled();
                 SendMessage("OnEnemyDie", SendMessageOptions.DontRequireReceiver);
 
                 //Collider2D c = GetComponent<Collider2D>();
@@ -60,5 +62,10 @@ public class Enemy : MonoBehaviour {
 
     public bool GivePlayerDamage() {
         return canAttack && Time.time > lastHitTime + HIT_COOLDOWN && HP > 0 && isStarted;
+    }
+
+
+    private void OnDestroy() {
+        LeanTween.cancel(gameObject);
     }
 }

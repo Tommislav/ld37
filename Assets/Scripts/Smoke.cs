@@ -6,13 +6,11 @@ public class Smoke : MonoBehaviour {
 
     private Animator animator;
 
-    private Vector3 centerPos;
     private float rad;
     private int numTimes;
     private SmokeSpawner.SmokeCallback callback;
 
-    public void StartSmoke(Vector3 centerPos, float rad, int minTimes, int maxTimes, SmokeSpawner.SmokeCallback callback) {
-        this.centerPos = centerPos;
+    public void StartSmoke(float rad, int minTimes, int maxTimes, SmokeSpawner.SmokeCallback callback) {
         this.rad = rad;
         numTimes = UnityEngine.Random.Range(minTimes, maxTimes);
         this.callback = callback;
@@ -36,8 +34,8 @@ public class Smoke : MonoBehaviour {
 
         float r = UnityEngine.Random.value * Mathf.PI * 2f;
         float dist = UnityEngine.Random.Range(0f, rad);
-        Vector3 p = centerPos + new Vector3(Mathf.Cos( r ) * dist, Mathf.Sin(r) * dist);
-        transform.position = p;
+        Vector3 p = new Vector3(Mathf.Cos( r ) * dist, Mathf.Sin(r) * dist);
+        transform.localPosition = p;
 
         if (UnityEngine.Random.value < 0.5f) {
             animator.Play("Smoke1");
