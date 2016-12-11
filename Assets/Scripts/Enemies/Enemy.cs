@@ -4,9 +4,10 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
     public int HP = 3;
+    public bool canAttack = true;
 
     private float lastHitTime = 0f;
-    private static float HIT_COOLDOWN = 0.7f;
+    private static float HIT_COOLDOWN = 1f;
 
     private void Start() {
 
@@ -37,11 +38,21 @@ public class Enemy : MonoBehaviour {
             HP--;
             if (HP <= 0) {
                 SendMessage("OnEnemyDie", SendMessageOptions.DontRequireReceiver);
+
+                //Collider2D c = GetComponent<Collider2D>();
+                //if(c != null) {
+                //    c.isTrigger = true;
+                //}
             }
             else {
                 SendMessage("OnEnemyHit", SendMessageOptions.DontRequireReceiver);
+
             }
 
         }
+    }
+
+    public bool GivePlayerDamage() {
+        return canAttack && Time.time > lastHitTime + HIT_COOLDOWN && HP > 0;
     }
 }

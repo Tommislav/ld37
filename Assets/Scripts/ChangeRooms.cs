@@ -44,29 +44,26 @@ public class ChangeRooms : MonoBehaviour {
         Game.isRoomTransition = true;
         int id = (int)dir;
 
-        //GameObject dummy = Instantiate(playerDummy) as GameObject;
         GameObject player = PlayerControls.Instance.gameObject;
 
         Vector3 playerPos = player.transform.position;
         Vector3 wrappedPos = playerPos + cam2Start[id];
         wrappedPos = new Vector3(wrappedPos.x, wrappedPos.y, 0);
 
-        //dummy.transform.position = playerPos;
         player.transform.position = wrappedPos;
-
         Vector3 newPlayerPos = wrappedPos + movePlayer[id];
-        Vector3 newDummyPos = playerPos + movePlayer[id];
+        LeanTween.move(player, newPlayerPos, transitionTime).setIgnoreTimeScale(true);
 
-        LeanTween.move(player, newPlayerPos, transitionTime);
-        //LeanTween.move(dummy, newDummyPos, transitionTime);
+        Time.timeScale = 0f;
 
-        LeanTween.move(camera1.gameObject, cam1End[id], transitionTime);
-        LeanTween.move(camera2.gameObject, new Vector3(0, 0, camZ), transitionTime).setOnComplete(() => {
+        LeanTween.move(camera1.gameObject, cam1End[id], transitionTime).setIgnoreTimeScale(true);
+        LeanTween.move(camera2.gameObject, new Vector3(0, 0, camZ), transitionTime).setIgnoreTimeScale(true).setOnComplete(() => {
             camera1.transform.position = new Vector3(0, 0, -10);
             camera2.gameObject.SetActive(false);
             PlayerControls.Instance.OnRoomTranisiontCompleted();
             //Destroy(dummy);
             Game.isRoomTransition = false;
+            Time.timeScale = 1;
         });
     }
 }

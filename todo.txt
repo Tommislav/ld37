@@ -1,7 +1,7 @@
 X Room wrapping
 X Animate player
-o Player attack enemies
-o onemies attack player
+X Player attack enemies
+o enemies attack player
 
 o Spawning enemies
 o Text sign
@@ -13,3 +13,5 @@ o Chests
 o Enemies
 o Boss
 o Exit
+
+o Musik och ljudeffekter

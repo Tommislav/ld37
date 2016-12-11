@@ -9,11 +9,6 @@ public class PlayerControls : MonoBehaviour {
     private Rigidbody2D rb;
     private float moveForce = 200f;
 
-    private GameObject swordU;
-    private GameObject swordD;
-    private GameObject swordL;
-    private GameObject swordR;
-
     private Transform animationTransform;
     private Animator animator;
 
@@ -21,6 +16,9 @@ public class PlayerControls : MonoBehaviour {
     private bool isAttacking;
 
     private int moveLastMove;
+
+    private float freezeTime = 0;
+    private bool isBlinking;
 
     void Awake() {
         Instance = this;
@@ -40,8 +38,18 @@ public class PlayerControls : MonoBehaviour {
     }
 
     void Update() {
-        if(Game.isRoomTransition) {
+
+        if (isBlinking) {
+            animationTransform.gameObject.SetActive(!animationTransform.gameObject.activeSelf);
+        }
+
+        if(Game.isRoomTransition || Time.time < freezeTime) {
             return;
+        }
+
+        if (isBlinking) {
+            isBlinking = false;
+            animationTransform.gameObject.SetActive(true);
         }
 
         bool moveLeft = Input.GetKey(KeyCode.LeftArrow);
@@ -135,5 +143,30 @@ public class PlayerControls : MonoBehaviour {
             return swords[dir];
         }
         return null;
+    }
+
+    private void OnCollisionEnter2D(Collision2D coll) {
+
+        if (Time.time < freezeTime) {
+            return;
+        }
+
+        if (coll.gameObject.CompareTag("Enemy")) {
+
+            Enemy enemy = Find.ComponentOnGameObject<Enemy>(this, coll.gameObject);
+            if (!enemy.GivePlayerDamage()) {
+                Debug.Log("Cannot give player damage!");
+                return;
+            }
+
+            Vector2 e = coll.transform.position;
+            Vector2 p = transform.position;
+            Vector2 delta = (p - e).normalized * (moveForce * 1f);
+
+            rb.AddForce(delta, ForceMode2D.Impulse);
+            freezeTime = Time.time + 1f;
+            isBlinking = true;
+
+        }
     }
 }
