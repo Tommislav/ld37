@@ -17,6 +17,7 @@ public class PrefabRegistry : MonoBehaviour {
     public GameObject smokeSpawner;
 
     public GameObject enemyBouncer;
+	public GameObject enemyBouncerSmall;
 
 
 

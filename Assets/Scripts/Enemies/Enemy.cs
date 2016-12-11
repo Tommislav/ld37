@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
     private static float HIT_COOLDOWN = 1f;
     private bool isStarted;
 
-	private float removeCountdown = 60f;
+	public float removeCountdown = 60f;
 
     void Update() {
 		if (HP <= 0) {
