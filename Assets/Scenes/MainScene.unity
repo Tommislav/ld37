@@ -4172,6 +4172,7 @@ GameObject:
   - 114: {fileID: 1133890653}
   - 50: {fileID: 1133890654}
   - 61: {fileID: 1133890655}
+  - 95: {fileID: 1133890656}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4242,6 +4243,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.41558442, y: 0.83116883}
+--- !u!95 &1133890656
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1133890651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 40510cd03cf404d4392d4a84975fc6a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &1148492914
 Prefab:
   m_ObjectHideFlags: 0
@@ -5965,7 +5983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!124 &1813365091
 Behaviour:
   m_ObjectHideFlags: 0

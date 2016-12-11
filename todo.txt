@@ -1,6 +1,15 @@
 X Room wrapping
-O Attack
-O Graphics
-O Enemies
-O Pickups
-O HUD
+o Animate player
+o Player attack enemies
+o onemies attack player
+
+o Spawning enemies
+o Text sign
+o Keep track of position "SS" "NS" "SW" and so on
+o Step-triggers
+o First room intro
+o Rearrange interiors
+o Chests
+o Enemies
+o Boss
+o Exit
