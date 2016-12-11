@@ -15,6 +15,14 @@ public class Game : MonoBehaviour {
     private bool doorsAreLocked;
 	private int health = 5;
 
+	private int numberOfRooms = 0;
+	private int numberOfMonstersInRoom = 0;
+	private int healthAtStartOfRoom = 0;
+	private string room0 = "";
+	private string room1 = "";
+	private string rooms = "";
+	private bool checkForHealthPickupAtEnd;
+
     void Awake() {
         Instace = this;
         lockDoors = Find.ChildByName(this, "/World/Doors");
@@ -26,14 +34,49 @@ public class Game : MonoBehaviour {
 
 
     public void OnEnterNewRoom(string room) {
-        LeanTween.delayedCall(gameObject, 1f, SpawnMonster);
+		numberOfRooms++;
+		room1 = room0;
+		room0 = room;
+		rooms = room0 + room1;
+		Debug.Log(rooms + ", " + numberOfRooms);
+
+		StartCoroutine(SpawnMonsters());
+
+		
+		numberOfMonstersInRoom = numberOfActiveMonsters;
+		healthAtStartOfRoom = health;
 
         if (numberOfActiveMonsters >= 3) {
             SetLockExits(true);
         }
     }
 
-    private void SpawnMonster() {
+	private IEnumerator SpawnMonsters() {
+		checkForHealthPickupAtEnd = false;
+		if (numberOfRooms < 2) { // 0, 1
+			numberOfActiveMonsters += 1;
+			yield return new WaitForSeconds(1);
+			SpawnMonster(PrefabRegistry.Instance.enemyBouncer);
+		}
+		else if (numberOfRooms == 2) {
+			numberOfActiveMonsters += 3;
+			checkForHealthPickupAtEnd = true;
+			SetLockExits(true);
+			yield return new WaitForSeconds(1);
+			SpawnMonster(PrefabRegistry.Instance.enemyBouncer);
+			SpawnMonster(PrefabRegistry.Instance.enemyBouncer);
+			SpawnMonster(PrefabRegistry.Instance.enemyBouncer);
+		}
+
+
+
+
+
+
+		yield return null;
+	}
+
+    private void SpawnMonster(GameObject enemyPrefab) {
         float minX = -6f;
         float maxX = 6f;
         float minY = -4f;
@@ -62,11 +105,21 @@ public class Game : MonoBehaviour {
     }
 
     public string GetTextForSign() {
+
+		if (numberOfRooms < 2) { // 0 or 1, first two rooms
+			return "Move with arrows, attack with WASD";
+		}
+		if (numberOfRooms == 2) {
+			return "It seems to be the same room over and over...";
+		}
+		if (numberOfRooms == 3) {
+			return "Keep going left for a nice surprise!";
+		}
+
         return "Welcome to the dungeon!";
     }
 
     public void OnNewMonster() {
-        numberOfActiveMonsters++;
     }
 
     public void OnMonsterKilled() {

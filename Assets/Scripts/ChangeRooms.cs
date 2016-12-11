@@ -48,7 +48,7 @@ public class ChangeRooms : MonoBehaviour {
 
         Vector3 playerPos = player.transform.position;
         Vector3 wrappedPos = playerPos + cam2Start[id];
-        wrappedPos = new Vector3(wrappedPos.x, wrappedPos.y, 0);
+        wrappedPos = new Vector3(wrappedPos.x, wrappedPos.y, playerPos.z);
 
         player.transform.position = wrappedPos;
         Vector3 newPlayerPos = wrappedPos + movePlayer[id];

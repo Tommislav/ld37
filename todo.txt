@@ -11,7 +11,7 @@ X lock the doors
 X Health
 o Intro
 
-o Keep track of position "SS" "NS" "SW" and so on
+X Keep track of position "SS" "NS" "SW" and so on
 o Kill an enemy can spawn an item
 
 
@@ -25,3 +25,11 @@ o Boss
 o Exit
 
 o Musik och ljudeffekter
+
+
+Sounds:
+LOCK ROOM
+UNLOCK ROOM
+SPAWN PICKUP
+PICK UP PICKUP
+
