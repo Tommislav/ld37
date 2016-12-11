@@ -12,7 +12,11 @@ public class PrefabRegistry : MonoBehaviour {
     }
 
 
-    //public GameObject hitMonsterParticles;
+    //public GameObject hitMonsterParticlesc;
+    public GameObject smoke;
+    public GameObject smokeSpawner;
+
+    public GameObject enemyBouncer;
 
 
 

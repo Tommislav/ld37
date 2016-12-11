@@ -11,7 +11,7 @@ public class ChangeRooms : MonoBehaviour {
 
     public Camera camera1;
     public Camera camera2;
-    public GameObject playerDummy;
+    public GameObject worldBounds;
 
     private float offH = 10f;
     private float offW = 13.4f;
@@ -55,15 +55,24 @@ public class ChangeRooms : MonoBehaviour {
         LeanTween.move(player, newPlayerPos, transitionTime).setIgnoreTimeScale(true);
 
         Time.timeScale = 0f;
+        Game.Instace.OnLeaveRoom();
+
+        worldBounds.SetActive(false);
 
         LeanTween.move(camera1.gameObject, cam1End[id], transitionTime).setIgnoreTimeScale(true);
         LeanTween.move(camera2.gameObject, new Vector3(0, 0, camZ), transitionTime).setIgnoreTimeScale(true).setOnComplete(() => {
             camera1.transform.position = new Vector3(0, 0, -10);
             camera2.gameObject.SetActive(false);
             PlayerControls.Instance.OnRoomTranisiontCompleted();
-            //Destroy(dummy);
+            Game.Instace.OnEnterNewRoom(DirToString(dir));
             Game.isRoomTransition = false;
             Time.timeScale = 1;
+            worldBounds.SetActive(true);
         });
+    }
+
+    private string DirToString(Dir d) {
+        string[] s = new string[] { "U", "D", "L", "R" };
+        return s[(int)d];
     }
 }

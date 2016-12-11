@@ -6,8 +6,10 @@ public class Enemy : MonoBehaviour {
     public int HP = 3;
     public bool canAttack = true;
 
+
     private float lastHitTime = 0f;
     private static float HIT_COOLDOWN = 1f;
+    private bool isStarted;
 
     private void Start() {
 
@@ -17,9 +19,13 @@ public class Enemy : MonoBehaviour {
 
     }
 
+    public void EnemySpawned() {
+        isStarted = true;
+        SendMessage("EnemyStart", SendMessageOptions.DontRequireReceiver);
+    }
 
     private void OnTriggerEnter2D(Collider2D coll) {
-        if (HP <= 0) {
+        if (HP <= 0 || !isStarted) {
             return;
         }
         if (coll.CompareTag("PlayerAtk")) {
@@ -53,6 +59,6 @@ public class Enemy : MonoBehaviour {
     }
 
     public bool GivePlayerDamage() {
-        return canAttack && Time.time > lastHitTime + HIT_COOLDOWN && HP > 0;
+        return canAttack && Time.time > lastHitTime + HIT_COOLDOWN && HP > 0 && isStarted;
     }
 }

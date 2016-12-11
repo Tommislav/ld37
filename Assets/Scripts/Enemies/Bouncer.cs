@@ -11,24 +11,38 @@ public class Bouncer : MonoBehaviour {
     float vy;
 
     private int cnt;
+    private bool enemyStarted;
 
     void Start() {
         rb = Find.ComponentOnGameObject<Rigidbody2D>(this);
+
+    }
+
+
+    public void EnemyStart() {
+        enemyStarted = true;
         vx = Random.value < 0.5f ? -1f : 1f;
         vy = Random.value < 0.5f ? -1f : 1f;
         rb.AddForce((new Vector2(vx, vy) * f), ForceMode2D.Impulse);
     }
 
     void OnCollisionEnter2D(Collision2D coll) {
-        if(coll.collider.gameObject.layer != LayerMask.NameToLayer("World")) {
+        if (!enemyStarted) {
             return;
         }
+        //if(coll.collider.gameObject.layer != LayerMask.NameToLayer("World")) {
+        //    return;
+        //}
 
         Vector2 cPos = coll.contacts[0].point;
         ChangeDirection(cPos);
     }
 
     void Update() {
+        if (!enemyStarted) {
+            return;
+        }
+
         if(--cnt <= 0) {
             cnt = 10;
 
