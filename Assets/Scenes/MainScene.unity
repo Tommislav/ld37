@@ -3500,6 +3500,7 @@ Transform:
   - {fileID: 2112645490}
   - {fileID: 1231900614}
   - {fileID: 1202641376}
+  - {fileID: 2144527537}
   m_Father: {fileID: 0}
   m_RootOrder: 4
 --- !u!1001 &495871044
@@ -6112,6 +6113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d434597fc9672254e8fe6baf9516c32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEndOfGame: 0
   hitMonsterParticles: {fileID: 1318826531}
 --- !u!114 &863500706
 MonoBehaviour:
@@ -6131,6 +6133,12 @@ MonoBehaviour:
     type: 2}
   enemyBouncerSmall: {fileID: 1000013832266424, guid: a0aade1585e82a44b92038273652fe0a,
     type: 2}
+  enemyRunner: {fileID: 1000014014392682, guid: fba8b39e62a64214ca31e6fe965aca90,
+    type: 2}
+  enemyRunnerBig: {fileID: 1000012891349396, guid: 347eb8ed06108804eb9a349d2e430e10,
+    type: 2}
+  endBoss: {fileID: 1000012031026222, guid: faec8aa860d337548b4376a4c58c3102, type: 2}
+  bullet: {fileID: 1000012245071428, guid: 3712fd50804f1bc4c87429a7896c21f4, type: 2}
 --- !u!1001 &883844069
 Prefab:
   m_ObjectHideFlags: 0
@@ -16355,3 +16363,31 @@ Transform:
   m_PrefabParentObject: {fileID: 4000010747127656, guid: ca0bc9feb9d28d5418b6c9316be2558c,
     type: 2}
   m_PrefabInternal: {fileID: 2137080265}
+--- !u!1 &2144527536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2144527537}
+  m_Layer: 0
+  m_Name: Bullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2144527537
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2144527536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 479708392}
+  m_RootOrder: 14

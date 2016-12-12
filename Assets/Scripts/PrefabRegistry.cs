@@ -18,7 +18,10 @@ public class PrefabRegistry : MonoBehaviour {
 
     public GameObject enemyBouncer;
 	public GameObject enemyBouncerSmall;
-
+	public GameObject enemyRunner;
+	public GameObject enemyRunnerBig;
+	public GameObject endBoss;
+	public GameObject bullet;
 
 
 

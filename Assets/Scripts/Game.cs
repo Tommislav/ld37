@@ -8,6 +8,8 @@ public class Game : MonoBehaviour {
 
     public static bool isRoomTransition;
 
+	public bool isEndOfGame;
+
     public ParticleSystem hitMonsterParticles;
 
     private int numberOfActiveMonsters;
@@ -24,6 +26,7 @@ public class Game : MonoBehaviour {
 	private GameObject positions;
 	private GameObject randomInteriors;
 	private GameObject trigger1;
+	private GameObject endGameTrigger;
 
 	private int numberOfRooms = 0;
 	private int numberOfMonstersInRoom = 0;
@@ -35,6 +38,10 @@ public class Game : MonoBehaviour {
 	private int roomEndCondition;
 	private int difficultyLevel = 0;
 
+	public int GetDifficultyLevel() {
+		return difficultyLevel;
+	}
+
     void Awake() {
         Instace = this;
         lockDoors = Find.ChildByName(this, "/World/Doors");
@@ -42,6 +49,7 @@ public class Game : MonoBehaviour {
 		positions = Find.ChildByName(this, "/World/Pos");
 		randomInteriors = Find.ChildByName(this, "/World/InteriorCombos/Rnd");
 		trigger1 = Find.ChildByName(this, "/World/StepTriggers/RandomTrigger");
+		endGameTrigger = Find.ChildByName(this, "/World/StepTriggers/EndGameTrigger");
 		endgameDoor = Find.ChildByName(this, "/World/EndingDoor");
         SetLockExits(false);
     }
@@ -74,7 +82,7 @@ public class Game : MonoBehaviour {
 		if (numberOfRooms < 2) { // 0, 1
 			numberOfActiveMonsters += 1;
 			yield return new WaitForSeconds(1);
-			SpawnMonster(PrefabRegistry.Instance.enemyBouncer);
+			SpawnMonster(PrefabRegistry.Instance.endBoss, "Boss");
 		}
 		else if (numberOfRooms == 2) {
 			numberOfActiveMonsters += 3;
@@ -205,6 +213,10 @@ public class Game : MonoBehaviour {
 		}
 		// shake camera?
     }
+
+	public void EnableEndGameTrigger() {
+		endGameTrigger.SetActive(true);
+	}
 
 	public void OnEndGameTriggerInvoked() {
 		endgameDoor.SetActive(false);

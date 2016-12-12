@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour {
 
     public int HP = 3;
     public bool canAttack = true;
+	public bool destroyable = true;
 
 
     private float lastHitTime = 0f;
@@ -20,7 +21,17 @@ public class Enemy : MonoBehaviour {
 				Destroy(gameObject);
 			}
 		}
+
+		if (Game.Instace.isEndOfGame) {
+			if (GetComponent<EndBoss>() == null) {
+				Destroy(gameObject);
+			}
+		}
     }
+
+	public void SpecialForBullets() {
+		isStarted = true;
+	}
 
     public void EnemySpawned() {
         isStarted = true;
@@ -29,6 +40,10 @@ public class Enemy : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D coll) {
+		if (!destroyable) {
+			return;
+		}
+
         if (HP <= 0 || !isStarted) {
             return;
         }
