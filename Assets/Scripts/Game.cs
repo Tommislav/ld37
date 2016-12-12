@@ -29,7 +29,7 @@ public class Game : MonoBehaviour {
 	private GameObject trigger1;
 	private GameObject endGameTrigger;
 
-	private int numberOfRooms = 0;
+	private int numberOfRooms = 5;
 	private int numberOfMonstersInRoom = 0;
 	private int healthAtStartOfRoom = 0;
 	private string room0 = "";
@@ -111,7 +111,7 @@ public class Game : MonoBehaviour {
 			SpawnMonster(PrefabRegistry.Instance.endBoss, "Boss");
 		} else {
 
-			if(rooms == "RR" || numberOfRooms % 3 == 0) {
+			if(room1 == "R" || numberOfRooms % 3 == 0 || health <= 2) {
 				checkForHealthPickupAtEnd = true;
 			}
 
@@ -176,8 +176,10 @@ public class Game : MonoBehaviour {
 				spawnPos[r] = temp;
 			}
 
+			numberOfActiveMonsters += enemies.Length;
 			for(int i = 0; i < enemies.Length; i++) {
 				SpawnMonster(enemies[i], spawnPos[i]);
+				yield return new WaitForSeconds(UnityEngine.Random.value);
 			}
 
 		}
@@ -245,7 +247,6 @@ public class Game : MonoBehaviour {
 		}
 
 		return GetRandomString(new string[] {
-				"Going left increases chance of gifts",
 				"Legend talks of a purple SWORD",
 				"Getting bored of same room? Refurnish!",
 				"Stronger creatures lurks northward!",
@@ -269,7 +270,7 @@ public class Game : MonoBehaviour {
 			if(checkForHealthPickupAtEnd && health < 5) {
 				healthPickup.SetActive(true);
 			} else {
-				if(numberOfRooms == 3 || (rooms == "DD" && numberOfRooms % 2 == 0)) {
+				if(numberOfRooms == 3 || (room1 == "D")) {
 					trigger1.SetActive(true);
 				}
 			}
