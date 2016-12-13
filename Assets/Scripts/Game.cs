@@ -29,7 +29,7 @@ public class Game : MonoBehaviour {
 	private GameObject trigger1;
 	private GameObject endGameTrigger;
 
-	private int numberOfRooms = 5;
+	private int numberOfRooms = 0;
 	private int numberOfMonstersInRoom = 0;
 	private int healthAtStartOfRoom = 0;
 	private string room0 = "";
